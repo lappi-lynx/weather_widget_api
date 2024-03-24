@@ -13,5 +13,8 @@
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
+  },
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts"
   }
 }
