@@ -5,7 +5,8 @@ const METEO_PROVIDER_BASE_URL = 'https://api.open-meteo.com/v1/forecast';
 
 export class MeteoService {
   async fetchForecast(location: Location): Promise<Forecast[]> {
-    let params = `latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,cloud_cover&temperature_unit=celsius&forecast_days=3`;
+    let forecast_days = location.forecast_days || 3;
+    let params = `latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,cloud_cover&temperature_unit=celsius&forecast_days=${forecast_days}`;
     const response = await fetch(`${METEO_PROVIDER_BASE_URL}?${params}`);
 
     if (!response.ok) {
