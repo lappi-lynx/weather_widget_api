@@ -1,3 +1,5 @@
+import { Location } from './Location';
+
 export class Forecast {
   constructor(
     public location: Location,
@@ -5,6 +7,7 @@ export class Forecast {
     public temperature: number,
     public humidity: number,
     public windSpeed: number,
+    public cloudCover: number,
     public temperatureUnit: string
   ) { }
 }
