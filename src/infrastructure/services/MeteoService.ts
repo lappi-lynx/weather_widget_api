@@ -14,8 +14,6 @@ export class MeteoService {
     }
 
     const data = await response.json();
-    console.log('~~~~ response JSON', data);
-
     const temperatureUnit = data.hourly_units.temperature_2m.replace(/[^CF]/g, '');
 
     return data.hourly.time.map((timestamp: string, i: number) => new Forecast(
