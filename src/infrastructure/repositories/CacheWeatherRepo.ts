@@ -9,9 +9,9 @@ export class CacheWeatherRepo implements WeatherRepo {
   private meteoService: MeteoService;
   private ttl: number = 24 * 60 * 60; // 24h expiration
 
-  constructor() {
-    this.redisClient  = new Redis();
-    this.meteoService = new MeteoService();
+  constructor(redisClient: Redis = new Redis(), meteoService: MeteoService = new MeteoService()) {
+    this.redisClient = redisClient;
+    this.meteoService = meteoService;
   }
 
   async getForecast(location: Location): Promise<Forecast[]> {

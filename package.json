@@ -13,6 +13,7 @@
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.30",
+    "ioredis-mock": "^8.9.0",
     "jest": "^29.7.0",
     "jest-fetch-mock": "^3.0.3",
     "nodemon": "^3.1.0",
