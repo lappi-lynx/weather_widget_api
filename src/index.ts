@@ -1,10 +1,14 @@
 import express from 'express';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { z } from 'zod';
 import { WeatherService } from './application/services/WeatherService';
 import { CacheWeatherRepo } from './infrastructure/repositories/CacheWeatherRepo';
 import { Location } from './domain/models/Location';
+import { typeDefs } from './presentation/graphql/typeDefs/index';
+import { resolvers } from './presentation/graphql/resolvers/index';
 
 dotenv.config();
 
@@ -14,9 +18,32 @@ const port = process.env.PORT || 4444;
 async function runServer() {
   const weatherRepository = new CacheWeatherRepo();
   const weatherService = new WeatherService(weatherRepository);
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
+  await server.start();
 
   app.use(cors());
   app.use(express.json());
+
+  app.use('/graphql', expressMiddleware(server));
+  // Example:
+  // query {
+  //   getForecastForLocation(latitude: 60.1695, longitude: 24.9354, forecastDays: 1) {
+  //   location {
+  //       latitude
+  //       longitude
+  //       forecastDays
+  //     }
+  //     timestamp
+  //     temperature
+  //     humidity
+  //     windSpeed
+  //     cloudCover
+  //     temperatureUnit
+  //   }
+  // }
 
   app.get('/', (req, res) => {
     res.send("Hello World!");
