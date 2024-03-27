@@ -19,7 +19,7 @@ export class CacheWeatherRepo implements WeatherRepo {
     let cachedForecasts = await this.redisClient.get(cacheKey);
 
     if (cachedForecasts) {
-      console.log('Returning data from cache');
+      console.log('*** Returning data from cache');
       return JSON.parse(cachedForecasts);
     }
 

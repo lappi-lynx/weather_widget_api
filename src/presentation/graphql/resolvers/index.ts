@@ -8,9 +8,7 @@ const weatherService = new WeatherService(weatherRepository);
 export const resolvers = {
   Query: {
     getForecastForLocation: async (_: any, { latitude, longitude, forecast_days }: { latitude: number; longitude: number; forecast_days?: number }) => {
-      console.log("forecast_days", forecast_days);
       if (forecast_days !== undefined && (forecast_days < 1 || forecast_days > 16)) {
-        console.log('TRUE');
         throw new Error("forecast_days must be a number between 1 and 16.");
       }
       const location = new Location(latitude, longitude, forecast_days);

@@ -29,18 +29,19 @@ async function runServer() {
 
   app.use('/graphql', expressMiddleware(server));
   // Example:
-  // query {
-  //   getForecastForLocation(latitude: 60.1695, longitude: 24.9354, forecastDays: 1) {
-  //   location {
+  //  query {
+  //   getForecastForLocation(latitude: 60.1695, longitude: 24.9354, forecast_days: 1) {
+  //    location {
   //       latitude
   //       longitude
-  //       forecastDays
+  //       forecast_days
   //     }
   //     timestamp
   //     temperature
   //     humidity
   //     windSpeed
   //     cloudCover
+  //     sunshineDuration
   //     temperatureUnit
   //   }
   // }
