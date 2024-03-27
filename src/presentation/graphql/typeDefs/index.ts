@@ -1,22 +1,12 @@
-export const typeDefs = `
-  type Location {
-    latitude: Float!
-    longitude: Float!
-    forecast_days: Int
-  }
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
-  type Forecast {
-    location: Location!
-    timestamp: String!
-    temperature: Float!
-    humidity: Int!
-    windSpeed: Float!
-    cloudCover: Int!
-    sunshineDuration: Float!
-    temperatureUnit: String!
-  }
+const loadTypeDefs = (type: string) => {
+  return readFileSync(join(__dirname, `${type}.graphql`), 'utf-8');
+};
 
-  type Query {
-    getForecastForLocation(latitude: Float!, longitude: Float!, forecast_days: Int): [Forecast]
-  }
-`;
+export const typeDefs = [
+  loadTypeDefs('Location'),
+  loadTypeDefs('Forecast'),
+  loadTypeDefs('Query')
+].join(' ');

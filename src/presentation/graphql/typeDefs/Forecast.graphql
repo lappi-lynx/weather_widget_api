@@ -1,0 +1,10 @@
+type Forecast {
+  location: Location!
+  timestamp: String!
+  temperature: Float!
+  humidity: Int!
+  windSpeed: Float!
+  cloudCover: Int!
+  sunshineDuration: Float!
+  temperatureUnit: String!
+}
