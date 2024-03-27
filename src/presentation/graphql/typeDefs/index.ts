@@ -12,6 +12,7 @@ export const typeDefs = `
     humidity: Int!
     windSpeed: Float!
     cloudCover: Int!
+    sunshineDuration: Int!
     temperatureUnit: String!
   }
 

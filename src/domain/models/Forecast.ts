@@ -8,6 +8,7 @@ export class Forecast {
     public humidity: number,
     public windSpeed: number,
     public cloudCover: number,
+    public sunshineDuration: number,
     public temperatureUnit: string
   ) { }
 }

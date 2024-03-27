@@ -23,6 +23,7 @@ export class MeteoService {
       data.hourly.relative_humidity_2m[i],
       data.hourly.wind_speed_10m[i],
       data.hourly.cloud_cover[i],
+      data.hourly.sunshine_duration[i],
       temperatureUnit
     ));
   }
