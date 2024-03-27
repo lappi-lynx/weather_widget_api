@@ -7,8 +7,7 @@ import { z } from 'zod';
 import { WeatherService } from './application/services/WeatherService';
 import { CacheWeatherRepo } from './infrastructure/repositories/CacheWeatherRepo';
 import { Location } from './domain/models/Location';
-import { typeDefs } from './presentation/graphql/typeDefs/index';
-import { resolvers } from './presentation/graphql/resolvers/index';
+import { typeDefs, resolvers } from './presentation/graphql/index';
 
 dotenv.config();
 
@@ -30,7 +29,7 @@ async function runServer() {
   app.use('/graphql', expressMiddleware(server));
   // Example:
   //  query {
-  //   getForecastForLocation(latitude: 60.1695, longitude: 24.9354, forecast_days: 1) {
+  //   getForecastByCoordinates(latitude: 60.1695, longitude: 24.9354, days: 1) {
   //    location {
   //       latitude
   //       longitude
