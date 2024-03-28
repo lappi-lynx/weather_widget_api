@@ -9,6 +9,7 @@ import { CacheWeatherRepo } from './infrastructure/repositories/CacheWeatherRepo
 import { Location } from './domain/models/Location';
 import { typeDefs, resolvers } from './presentation/graphql/index';
 import { validateQuerySchema } from './utils/validateQuerySchema';
+import { handleErrors } from './utils/handleErrors';
 
 dotenv.config();
 
@@ -34,7 +35,7 @@ async function runServer() {
       const { latitude, longitude, days } = validateQuerySchema.parse({
         latitude: req.query.latitude,
         longitude: req.query.longitude,
-        days: req.query.days as string
+        days: req.query.days
       });
 
       const location = new Location(latitude, longitude, days);
@@ -42,12 +43,7 @@ async function runServer() {
 
       res.json(forecast);
     } catch (e) {
-      if (e instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid query parameters.", errors: e.errors });
-      } else if (e instanceof Error) {
-        console.error('Error fetching weather data:', e);
-        return res.status(500).json({ message: e.message });
-      }
+      handleErrors(e, res);
     }
   });
 
