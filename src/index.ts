@@ -52,20 +52,20 @@ async function runServer() {
   const querySchema = z.object({
     latitude: z.string().transform((str) => parseFloat(str)),
     longitude: z.string().transform((str) => parseFloat(str)),
-    forecast_days: z.string().transform((str) => parseInt(str, 10)).refine((n) => !isNaN(n) && n >= 1 && n <= 16, {
-      message: "forecast_days must be a number between 1 and 16.",
+    days: z.string().transform((str) => parseInt(str, 10)).refine((n) => !isNaN(n) && n >= 1 && n <= 16, {
+      message: "days must be a number between 1 and 16.",
     }),
   });
 
   app.get('/weather', async (req, res) => {
     try {
-      const { latitude, longitude, forecast_days } = querySchema.parse({
+      const { latitude, longitude, days } = querySchema.parse({
         latitude: req.query.latitude,
         longitude: req.query.longitude,
-        forecast_days: req.query.forecast_days as string
+        days: req.query.days as string
       });
 
-      const location = new Location(latitude, longitude, forecast_days);
+      const location = new Location(latitude, longitude, days);
       const forecast = await weatherService.getForecastForLocation(location);
 
       res.json(forecast);
