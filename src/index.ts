@@ -8,7 +8,7 @@ import { WeatherService } from './application/services/WeatherService';
 import { CacheWeatherRepo } from './infrastructure/repositories/CacheWeatherRepo';
 import { Location } from './domain/models/Location';
 import { typeDefs, resolvers } from './presentation/graphql/index';
-import { MIN_FORECAST_DAYS, MAX_FORECAST_DAYS } from './constants';
+import { MIN_FORECAST_DAYS, MAX_FORECAST_DAYS, MIN_LATITUDE, MAX_LATITUDE, MIN_LONGITUDE, MAX_LONGITUDE } from './constants';
 
 dotenv.config();
 
@@ -28,34 +28,23 @@ async function runServer() {
   app.use(express.json());
 
   app.use('/graphql', expressMiddleware(server));
-  // Example:
-  //  query {
-  //   getForecastByCoordinates(latitude: 60.1695, longitude: 24.9354, days: 1) {
-  //    location {
-  //       latitude
-  //       longitude
-  //       forecast_days
-  //     }
-  //     timestamp
-  //     temperature
-  //     humidity
-  //     windSpeed
-  //     cloudCover
-  //     sunshineDuration
-  //     temperatureUnit
-  //   }
-  // }
-
-  app.get('/', (req, res) => {
-    res.send("Hello World!");
-  });
 
   const querySchema = z.object({
-    latitude: z.string().transform((str) => parseFloat(str)),
-    longitude: z.string().transform((str) => parseFloat(str)),
-    days: z.string().transform((str) => parseInt(str, 10)).refine((n) => !isNaN(n) && n >= MIN_FORECAST_DAYS && n <= MAX_FORECAST_DAYS, {
+    latitude: z.string()
+      .transform((str) => parseFloat(str))
+      .refine((val) => !isNaN(val) && val >= MIN_LATITUDE && val <= MAX_LATITUDE, {
+        message: `Latitude must be a number between ${MIN_LATITUDE} and ${MAX_LATITUDE}.`,
+      }),
+    longitude: z.string()
+      .transform((str) => parseFloat(str))
+      .refine((val) => !isNaN(val) && val >= MIN_LONGITUDE && val <= MAX_LONGITUDE, {
+        message: `Longitude must be a number between ${MIN_LONGITUDE} and ${MAX_LONGITUDE}.`,
+      }),
+    days: z.string()
+      .transform((str) => parseInt(str, 10))
+      .refine((n) => !isNaN(n) && n >= MIN_FORECAST_DAYS && n <= MAX_FORECAST_DAYS, {
       message: `days must be a number between ${MIN_FORECAST_DAYS} and ${MAX_FORECAST_DAYS}.`,
-    }),
+    })
   });
 
   app.get('/weather', async (req, res) => {
