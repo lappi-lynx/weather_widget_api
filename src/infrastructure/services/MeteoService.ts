@@ -1,8 +1,7 @@
 import { Location } from './../../domain/models/Location';
 import { Forecast } from './../../domain/models/Forecast';
 import { MeteoResponse } from './../dto/MeteoResponse';
-
-const METEO_PROVIDER_BASE_URL = 'https://api.open-meteo.com/v1/forecast';
+import { METEO_PROVIDER_BASE_URL } from './../../constants';
 
 export class MeteoService {
   async fetchForecast(location: Location): Promise<Forecast[]> {

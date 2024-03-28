@@ -8,6 +8,7 @@ import { WeatherService } from './application/services/WeatherService';
 import { CacheWeatherRepo } from './infrastructure/repositories/CacheWeatherRepo';
 import { Location } from './domain/models/Location';
 import { typeDefs, resolvers } from './presentation/graphql/index';
+import { MIN_FORECAST_DAYS, MAX_FORECAST_DAYS } from './constants';
 
 dotenv.config();
 
@@ -52,8 +53,8 @@ async function runServer() {
   const querySchema = z.object({
     latitude: z.string().transform((str) => parseFloat(str)),
     longitude: z.string().transform((str) => parseFloat(str)),
-    days: z.string().transform((str) => parseInt(str, 10)).refine((n) => !isNaN(n) && n >= 1 && n <= 16, {
-      message: "days must be a number between 1 and 16.",
+    days: z.string().transform((str) => parseInt(str, 10)).refine((n) => !isNaN(n) && n >= MIN_FORECAST_DAYS && n <= MAX_FORECAST_DAYS, {
+      message: `days must be a number between ${MIN_FORECAST_DAYS} and ${MAX_FORECAST_DAYS}.`,
     }),
   });
 
