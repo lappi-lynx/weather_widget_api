@@ -1,5 +1,6 @@
 import { Location } from './../../domain/models/Location';
 import { Forecast } from './../../domain/models/Forecast';
+import { MeteoResponse } from './../dto/MeteoResponse';
 
 const METEO_PROVIDER_BASE_URL = 'https://api.open-meteo.com/v1/forecast';
 
@@ -18,7 +19,7 @@ export class MeteoService {
       throw new Error(`Error fetching weather data: ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const data: MeteoResponse = await response.json();
     const temperatureUnit = data.hourly_units.temperature_2m.replace(/[^CF]/g, '');
     const hourly_data = data.hourly
 
