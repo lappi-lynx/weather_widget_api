@@ -9,7 +9,7 @@ const loadTypeDefs = (type: string) => {
 };
 
 const getTypeDefs = (types: string[]) => types.map(loadTypeDefs).join(' ');
-export const typeDefs = getTypeDefs(['location', 'forecast', 'query']);
+export const typeDefs = getTypeDefs(['Location', 'Forecast', 'Query']);
 
 export const resolvers: IResolvers<ResolverType> = {
   Query: {
