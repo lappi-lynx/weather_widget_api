@@ -101,3 +101,10 @@ query {
   }
 }
 ```
+Todos
+- [X] use DDD and onion layered approach
+- [X] Docker container
+- [X] GraphQL + REST API endpoints with schema validations
+- [X] Redis for caching duplicated queries response
+- [X] Github Actions CI and test run
+- [X] Unit and integration tests with JEST
