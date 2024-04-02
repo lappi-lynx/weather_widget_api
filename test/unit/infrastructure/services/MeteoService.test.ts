@@ -33,6 +33,8 @@ describe('MeteoService', () => {
       expect(firstForecast.windSpeed).toEqual(mockResponse.hourly.wind_speed_10m[0]);
       expect(firstForecast.cloudCover).toEqual(mockResponse.hourly.cloud_cover[0]);
       expect(firstForecast.sunshineDuration).toEqual(mockResponse.hourly.sunshine_duration[0]);
+      expect(firstForecast.precipitationProbability).toEqual(mockResponse.hourly.precipitation_probability[0]);
+      expect(firstForecast.precipitation).toEqual(mockResponse.hourly.precipitation[0]);
       expect(firstForecast.temperatureUnit).toMatch(/^[CF]$/); // Ensures it's either 'C' or 'F'
     }
   });

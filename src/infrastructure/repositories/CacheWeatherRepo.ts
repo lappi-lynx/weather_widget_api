@@ -7,7 +7,7 @@ import Redis from 'ioredis';
 export class CacheWeatherRepo implements WeatherRepo {
   private redisClient: Redis;
   private meteoService: MeteoService;
-  private ttl: number = 24 * 60 * 60; // 24h expiration
+  private ttl: number = 12 * 60 * 60; // 12h expiration
 
   constructor(redisClient: Redis = new Redis(), meteoService: MeteoService = new MeteoService()) {
     this.redisClient = redisClient;

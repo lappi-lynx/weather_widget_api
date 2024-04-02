@@ -6,6 +6,8 @@ export type MeteoResponse = {
     wind_speed_10m: number[];
     cloud_cover: number[];
     sunshine_duration: number[];
+    precipitation_probability: number[];
+    precipitation: number[];
   };
   hourly_units: {
     temperature_2m: string;

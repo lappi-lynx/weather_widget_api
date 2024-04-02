@@ -6,5 +6,7 @@ type Forecast {
   windSpeed: Float!
   cloudCover: Int!
   sunshineDuration: Float!
+  precipitationProbability: Int!
+  precipitation: Float!
   temperatureUnit: String!
 }

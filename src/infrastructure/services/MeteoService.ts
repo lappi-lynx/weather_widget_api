@@ -8,7 +8,7 @@ export class MeteoService {
     const params = new URLSearchParams({
       latitude: location.latitude.toString(),
       longitude: location.longitude.toString(),
-      hourly: 'temperature_2m,relative_humidity_2m,wind_speed_10m,cloud_cover,sunshine_duration',
+      hourly: 'temperature_2m,relative_humidity_2m,wind_speed_10m,cloud_cover,sunshine_duration,precipitation_probability,precipitation',
       temperature_unit: 'celsius',
       forecast_days: (location.forecast_days || 3).toString()
     });
@@ -30,6 +30,8 @@ export class MeteoService {
       hourly_data.wind_speed_10m[i],
       hourly_data.cloud_cover[i],
       hourly_data.sunshine_duration[i],
+      hourly_data.precipitation_probability[i],
+      hourly_data.precipitation[i],
       temperatureUnit
     ));
   }

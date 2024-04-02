@@ -22,6 +22,8 @@ describe('CacheWeatherRepo Integration Test with Redis and MeteoService Stubs', 
       mockResponse.hourly.wind_speed_10m[i],
       mockResponse.hourly.cloud_cover[i],
       mockResponse.hourly.sunshine_duration[i],
+      mockResponse.hourly.precipitation_probability[i],
+      mockResponse.hourly.precipitation[i],
       temperatureUnit
     );
   });
