@@ -1,7 +1,9 @@
 import { WeatherRepo } from '../../domain/repositories/WeatherRepo';
 import { Location } from '../../domain/models/Location';
 import { Forecast } from '../../domain/models/Forecast';
+import { DailyForecast } from '../../domain/models/DailyForecast';
 import { MeteoService } from '../services/MeteoService';
+import { ForecastMode } from '../../infrastructure/dto/ForecastMode';
 import Redis from 'ioredis';
 
 export class CacheWeatherRepo implements WeatherRepo {
@@ -14,8 +16,8 @@ export class CacheWeatherRepo implements WeatherRepo {
     this.meteoService = meteoService;
   }
 
-  async getForecast(location: Location): Promise<Forecast[]> {
-    const cacheKey = `weather:${location.latitude}:${location.longitude}:forecast_days:${location.forecast_days}`;
+  async getForecast(location: Location, mode: ForecastMode): Promise < Forecast[] | DailyForecast[] > {
+    const cacheKey = `weather:${location.latitude}:${location.longitude}:forecast_mode:${mode}:forecast_days:${location.forecast_days}`;
     let cachedForecasts = await this.redisClient.get(cacheKey);
 
     if (cachedForecasts) {
@@ -23,7 +25,7 @@ export class CacheWeatherRepo implements WeatherRepo {
       return JSON.parse(cachedForecasts);
     }
 
-    const forecasts = await this.meteoService.fetchForecast(location);
+    const forecasts = await this.meteoService.fetchForecast(location, mode);
     await this.redisClient.setex(cacheKey, this.ttl, JSON.stringify(forecasts));
     return forecasts;
   }

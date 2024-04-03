@@ -5,3 +5,5 @@ export const MIN_LATITUDE = -90;
 export const MAX_LATITUDE = 90;
 export const MIN_LONGITUDE = -180;
 export const MAX_LONGITUDE = 180;
+export const TEMPERATURE_UNIT = 'celsius';
+export const CELSIUS_CODE = 'C';
