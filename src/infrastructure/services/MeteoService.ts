@@ -17,7 +17,7 @@ export class MeteoService {
     if (mode === ForecastMode.Hourly) {
       params.set('hourly', 'temperature_2m,relative_humidity_2m,wind_speed_10m,cloud_cover,sunshine_duration,precipitation_probability,precipitation');
     } else if (mode === ForecastMode.Daily) {
-      params.set('daily', 'time,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max,weather_code,precipitation_probability_mean,sunshine_duration');
+      params.set('daily', 'temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max,weather_code,precipitation_probability_mean,sunshine_duration');
     }
 
     const response = await fetch(`${METEO_PROVIDER_BASE_URL}?${params}`);

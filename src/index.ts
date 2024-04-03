@@ -10,6 +10,7 @@ import { Location } from './domain/models/Location';
 import { typeDefs, resolvers } from './presentation/graphql/index';
 import { validateQuerySchema } from './utils/validateQuerySchema';
 import { handleErrors } from './utils/handleErrors';
+import { ForecastMode } from './infrastructure/dto/ForecastMode';
 
 dotenv.config();
 
@@ -32,14 +33,15 @@ async function runServer() {
 
   app.get('/weather', async (req, res) => {
     try {
-      const { latitude, longitude, days } = validateQuerySchema.parse({
+      const { latitude, longitude, days, mode } = validateQuerySchema.parse({
         latitude: req.query.latitude,
         longitude: req.query.longitude,
-        days: req.query.days
+        days: req.query.days,
+        mode: req.query.mode || ForecastMode.Hourly
       });
 
       const location = new Location(latitude, longitude, days);
-      const forecast = await weatherService.getForecastForLocation(location);
+      const forecast = await weatherService.getForecastForLocation(location, mode);
 
       res.json(forecast);
     } catch (e) {

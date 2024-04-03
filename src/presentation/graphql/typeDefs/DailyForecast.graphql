@@ -1,10 +1,10 @@
-type Forecast {
+type DailyForecast {
   location: Location!
   timestamp: String!
-  temperature: Float!
-  humidity: Int!
+  temperatureMax: Float!
+  temperatureMin: Float!
+  weatherCode: Int!
   windSpeed: Float!
-  cloudCover: Int!
   sunshineDuration: Float
   precipitationProbability: Int
   precipitation: Float!

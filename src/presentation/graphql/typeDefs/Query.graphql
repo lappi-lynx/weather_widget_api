@@ -1,3 +1,4 @@
 type Query {
-  getForecastByCoordinates(latitude: Float!, longitude: Float!, days: Int): [Forecast]
+  getHourlyForecastByCoordinates(latitude: Float!, longitude: Float!, days: Int): [Forecast]
+  getDailyForecastByCoordinates(latitude: Float!, longitude: Float!, days: Int, mode: String): [DailyForecast]
 }

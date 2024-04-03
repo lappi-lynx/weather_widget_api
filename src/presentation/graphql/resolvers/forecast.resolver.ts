@@ -3,18 +3,22 @@ import { CacheWeatherRepo } from '../../../infrastructure/repositories/CacheWeat
 import { Location }         from '../../../domain/models/Location';
 import { GetForecastByCoordinatesArgs } from './dto/ForecastResolverTypes';
 import { validateForecastByCoordinates } from './utils/validateForecastRequest';
+import { ForecastMode } from '../../../infrastructure/dto/ForecastMode';
 
 const weatherRepository = new CacheWeatherRepo();
 const weatherService = new WeatherService(weatherRepository);
 
 export const forecastResolver = {
   Query: {
-    getForecastByCoordinates: async (_: any, { latitude, longitude, days }: GetForecastByCoordinatesArgs) => {
+    getHourlyForecastByCoordinates: async (_: any, { latitude, longitude, days }: GetForecastByCoordinatesArgs) => {
       validateForecastByCoordinates({ latitude, longitude, days });
       const location = new Location(latitude, longitude, days);
-
-      return weatherService.getForecastForLocation(location);
+      return weatherService.getForecastForLocation(location, ForecastMode.Hourly);
+    },
+    getDailyForecastByCoordinates: async (_: any, { latitude, longitude, days }: GetForecastByCoordinatesArgs) => {
+      validateForecastByCoordinates({ latitude, longitude, days });
+      const location = new Location(latitude, longitude, days);
+      return weatherService.getForecastForLocation(location, ForecastMode.Daily);
     },
   },
 };
-
