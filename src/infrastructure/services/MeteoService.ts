@@ -3,7 +3,7 @@ import { Forecast } from '../../domain/models/Forecast';
 import { DailyForecast } from '../../domain/models/DailyForecast';
 import { MeteoResponse } from './../dto/MeteoResponse';
 import { ForecastMode } from './../dto/ForecastMode';
-import { METEO_PROVIDER_BASE_URL, TEMPERATURE_UNIT, CELSIUS_CODE } from './../../constants';
+import { METEO_PROVIDER_BASE_URL, TEMPERATURE_UNIT, TEMPERATURE_CODE } from './../../constants';
 
 export class MeteoService {
   async fetchForecast(location: Location, mode: ForecastMode): Promise<Forecast[] | DailyForecast[]> {
@@ -41,7 +41,7 @@ export class MeteoService {
         hourly_data.sunshine_duration[i],
         hourly_data.precipitation_probability[i],
         hourly_data.precipitation[i],
-        CELSIUS_CODE
+        TEMPERATURE_CODE
       ));
     } else {
       const daily_data = data.daily;
@@ -60,7 +60,7 @@ export class MeteoService {
         daily_data.sunshine_duration[i] ?? 0,
         daily_data.precipitation_probability_mean[i] ?? 0,
         daily_data.precipitation_sum[i],
-        CELSIUS_CODE
+        TEMPERATURE_CODE
       ));
     }
   }

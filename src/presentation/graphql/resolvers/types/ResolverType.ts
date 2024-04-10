@@ -1,4 +1,4 @@
-import { ForecastQueryResolvers } from './../resolvers/dto/ForecastResolverTypes';
+import { ForecastQueryResolvers } from './QueryResolverTypes';
 
 type QueryResolvers = ForecastQueryResolvers;
 

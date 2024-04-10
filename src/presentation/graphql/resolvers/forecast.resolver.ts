@@ -1,14 +1,10 @@
-import { WeatherService }   from '../../../application/services/WeatherService';
-import { CacheWeatherRepo } from '../../../infrastructure/repositories/CacheWeatherRepo';
+import { WeatherServiceRepo } from '../../../application/repositories/WeatherServiceRepo';
 import { Location }         from '../../../domain/models/Location';
-import { GetForecastByCoordinatesArgs } from './dto/ForecastResolverTypes';
+import { GetForecastByCoordinatesArgs } from './types/QueryResolverTypes';
 import { validateForecastByCoordinates } from './utils/validateForecastRequest';
 import { ForecastMode } from '../../../infrastructure/dto/ForecastMode';
 
-const weatherRepository = new CacheWeatherRepo();
-const weatherService = new WeatherService(weatherRepository);
-
-export const forecastResolver = {
+export const forecastResolver = (weatherService: WeatherServiceRepo) => ({
   Query: {
     getHourlyForecastByCoordinates: async (_: any, { latitude, longitude, days }: GetForecastByCoordinatesArgs) => {
       validateForecastByCoordinates({ latitude, longitude, days });
@@ -20,5 +16,5 @@ export const forecastResolver = {
       const location = new Location(latitude, longitude, days);
       return weatherService.getForecastForLocation(location, ForecastMode.Daily);
     },
-  },
-};
+  }
+});

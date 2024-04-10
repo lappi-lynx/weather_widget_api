@@ -1,10 +1,11 @@
+import { WeatherServiceRepo } from './../../application/repositories/WeatherServiceRepo';
 import { WeatherRepo } from './../../domain/repositories/WeatherRepo';
 import { Location } from './../../domain/models/Location';
 import { Forecast } from './../../domain/models/Forecast';
 import { DailyForecast } from './../../domain/models/DailyForecast';
 import { ForecastMode } from './../../infrastructure/dto/ForecastMode';
 
-export class WeatherService {
+export class WeatherService implements WeatherServiceRepo {
   private weatherRepository: WeatherRepo;
 
   constructor(weatherRepository: WeatherRepo) {

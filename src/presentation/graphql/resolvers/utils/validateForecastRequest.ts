@@ -1,4 +1,4 @@
-import { GetForecastByCoordinatesArgs } from '../dto/ForecastResolverTypes';
+import { GetForecastByCoordinatesArgs } from '../types/QueryResolverTypes';
 import {
   MIN_FORECAST_DAYS,
   MAX_FORECAST_DAYS,
