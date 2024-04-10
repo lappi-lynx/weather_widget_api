@@ -14,7 +14,7 @@ export class WeatherService implements WeatherServiceRepo {
 
   async getForecastForLocation(location: Location, modeStr: string = ForecastMode.Hourly): Promise<Forecast[] | DailyForecast[]> {
     const mode: ForecastMode = this.convertToForecastMode(modeStr);
-    return this.weatherRepository.getForecast(location, mode);
+    return this.weatherRepository.getForecastForLocation(location, mode);
   }
 
   private convertToForecastMode(modeStr: string): ForecastMode {

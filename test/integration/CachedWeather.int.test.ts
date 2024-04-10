@@ -1,4 +1,4 @@
-import { CacheWeatherRepo } from '../../src/infrastructure/repositories/CacheWeatherRepo';
+import { CachedWeatherManager } from '../../src/infrastructure/services/CachedWeatherManager';
 import { Location } from '../../src/domain/models/Location';
 import { Forecast } from '../../src/domain/models/Forecast';
 import { DailyForecast } from '../../src/domain/models/DailyForecast';
@@ -10,8 +10,8 @@ import { TEMPERATURE_UNIT } from './../../src/constants';
 
 const Redis = require('ioredis-mock');
 
-describe('CacheWeatherRepo Integration Test with Redis and MeteoService Stubs', () => {
-  let cacheWeatherRepo: CacheWeatherRepo;
+describe('CachedWeatherManager Integration test with Redis and MeteoService Stubs', () => {
+  let cacheWeatherService: CachedWeatherManager;
   let redisMock: typeof Redis;
   const meteoServiceMock = new MeteoService();
   const location = new Location(60.17136, 24.927353);
@@ -55,11 +55,11 @@ describe('CacheWeatherRepo Integration Test with Redis and MeteoService Stubs', 
       });
 
     jest.spyOn(meteoServiceMock, 'fetchForecast').mockResolvedValue(transformedData);
-    cacheWeatherRepo = new CacheWeatherRepo(redisMock, meteoServiceMock);
+    cacheWeatherService = new CachedWeatherManager(redisMock, meteoServiceMock);
   });
 
   it('should retrieve forecast data from MeteoService and cache it', async () => {
-    const forecasts = await cacheWeatherRepo.getForecast(location, mode);
+    const forecasts = await cacheWeatherService.getForecastForLocation(location, mode);
 
     expect(forecasts).toBeInstanceOf(Array);
     expect(forecasts).toHaveLength(transformedData.length);
@@ -81,7 +81,7 @@ describe('CacheWeatherRepo Integration Test with Redis and MeteoService Stubs', 
   it('should retrieve forecast data from cache on subsequent calls', async () => {
     await redisMock.set(cacheKey, JSON.stringify(transformedData));
 
-    const cachedForecasts = await cacheWeatherRepo.getForecast(location, mode);
+    const cachedForecasts = await cacheWeatherService.getForecastForLocation(location, mode);
 
     expect(cachedForecasts).not.toBeNull();
     expect(cachedForecasts).toHaveLength(transformedData.length);

@@ -3,13 +3,11 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { WeatherService } from './application/services/WeatherService';
-import { CacheWeatherRepo } from './infrastructure/repositories/CacheWeatherRepo';
-import { Location } from './domain/models/Location';
 import { typeDefs, resolvers } from './presentation/graphql/index';
 import { validateQuerySchema } from './utils/validateQuerySchema';
 import { handleErrors } from './utils/handleErrors';
 import { ForecastMode } from './infrastructure/dto/ForecastMode';
+import { getWeatherForLocation } from './presentation/rest/index';
 
 dotenv.config();
 
@@ -37,11 +35,7 @@ async function runServer() {
         mode: req.query.mode || ForecastMode.Hourly
       });
 
-      // NOTE: this is an implemntation details for REST API that should be decoupled from here to a separate service
-      const location          = new Location(latitude, longitude, days);
-      const weatherRepository = new CacheWeatherRepo();
-      const weatherService    = new WeatherService(weatherRepository);
-      const forecast          = await weatherService.getForecastForLocation(location, mode);
+      const forecast = await getWeatherForLocation(latitude, longitude, days, mode);
 
       res.json(forecast);
     } catch (e) {
